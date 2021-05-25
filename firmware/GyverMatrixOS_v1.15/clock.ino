@@ -81,10 +81,10 @@ void getNTP() {
   IPAddress ip;
   ip.fromString(F("0.0.0.0"));
 #if defined(ESP8266)
-  if (!timeServerIP.isSet()) timeServerIP.fromString(F("192.36.143.130"));  // Один из ru.pool.ntp.org // 195.3.254.2
+  if (!timeServerIP.isSet()) timeServerIP.fromString(F("213.231.5.55"));  // Один из ru.pool.ntp.org // 195.3.254.2
 #endif
 #if defined(ESP32)
-  if (timeServerIP==ip) timeServerIP.fromString(F("192.36.143.130"));  // Один из ru.pool.ntp.org // 195.3.254.2
+  if (timeServerIP==ip) timeServerIP.fromString(F("213.231.5.55"));  // Один из ru.pool.ntp.org // 195.3.254.2
 #endif
   printNtpServerName();
   sendNTPpacket(timeServerIP); // send an NTP packet to a time server
@@ -295,21 +295,8 @@ void clockRoutine() {
   FastLED.clear();
   clockTicker();
 
-  if (!showDateInClock) {
     // Отображать только часы
-    drawClock(hrs, mins, dotFlag, CLOCK_X, CLOCK_Y);
-  } else {
-    // Отображать попеременно часы и календарь
-    if (showDateState)
-      drawCalendar(aday, amnth, ayear, dotFlag, CALENDAR_X, CALENDAR_Y);
-    else  
-      drawClock(hrs, mins, dotFlag, CLOCK_X, CLOCK_Y);
-    
-    if (millis() - showDateStateLastChange > (showDateState ? showDateDuration : showDateInterval) * 1000L) {
-      showDateStateLastChange = millis();
-      showDateState = !showDateState;
-    }
-  }
+  drawClock(hrs, mins, dotFlag, CLOCK_X, CLOCK_Y);
 }
 
 void calendarRoutine() {

@@ -90,7 +90,8 @@ void loadSettings() {
   // Инициализировано ли EEPROM
   bool isInitialized = EEPROMread(0) == EEPROM_OK;  
     
-  if (isInitialized) {    
+  if (isInitialized) {
+    Serial.println("EEPROM OK!");
     globalBrightness = getMaxBrightness();
     scrollSpeed = getScrollSpeed();
     effectSpeed = map(EEPROMread(3),0,255,D_EFFECT_SPEED_MIN,D_EFFECT_SPEED_MAX);
@@ -157,48 +158,7 @@ void loadSettings() {
     loadStaticIP();
     
   } else {
-    globalBrightness = BRIGHTNESS;
-    scrollSpeed = D_TEXT_SPEED;
-    effectSpeed = D_EFFECT_SPEED;
-    gameSpeed = D_GAME_SPEED;
-    AUTOPLAY = true;
-    autoplayTime = ((long)AUTOPLAY_PERIOD * 1000L);     // секунды -> миллисек
-    idleTime = ((long)IDLE_TIME * 60L * 1000L);         // минуты -> миллисек
-    overlayEnabled = true;
-    useNtp = true;
-    SYNC_TIME_PERIOD = 60;
-    timeZoneOffset = 7;
-    CLOCK_ORIENT = 0;
-    COLOR_MODE = 0;
-    showDateInClock = true;  
-    showDateDuration = 3;
-    showDateInterval = 240;
-    alarmWeekDay = 0;
-    dawnDuration = 20;
-    alarmEffect = EFFECT_DAWN_ALARM;
-    useSoftAP = false;
-    alarmDuration = 1;
-
-    #if (USE_MP3 == 1)
-    useAlarmSound = false;
-    alarmSound = 1;
-    dawnSound = 1;
-    maxAlarmVolume = 30;
-    #endif
-        
-    useAutoBrightness = false;
-    autoBrightnessMin = 1;
-    globalColor = 0xFFFFFF;
-    useRandomSequence = true;
-
-    textColorMode = 0;
-
-    AM1_hour = 0;
-    AM1_minute = 0;
-    AM1_effect_id = -5;
-    AM2_hour = 0;
-    AM2_minute = 0;
-    AM2_effect_id = -5;    
+    Serial.println("EEPROM not OK");
   }
 
   scrollTimer.setInterval(scrollSpeed);
